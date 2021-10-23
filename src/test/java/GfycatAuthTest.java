@@ -1,5 +1,6 @@
 import org.junit.Assert;
 import org.junit.Test;
+import views.GfycatClientPasswordGrantView;
 
 public class GfycatAuthTest {
 
@@ -25,5 +26,20 @@ public class GfycatAuthTest {
 
         Assert.assertNotNull(client);
         Assert.assertNotNull(client.getToken());
+    }
+
+    @Test
+    public void connect_with_password_and_successWithRefresh() {
+        String clientId = "2_sQvENC";
+        String clientSecret = "ALLOT3VjIDAEcZrc32iDLCz25FiS0GhwfHW9uqtJKZigARmptvTWAs98pb5oNLHD";
+        String userName = "test_dev_account";
+        String password = "4xKkn52RaqZ9X7myNQX";
+
+        GfycatClient client =  GfycatBuilder.connect(clientId, clientSecret, userName, password);
+        GfycatClientPasswordGrantView refresh = GfycatBuilder.refresh(clientId, clientSecret, client.getRefreshToken());
+
+        Assert.assertNotNull(refresh);
+        Assert.assertNotNull(refresh.getAccess_token());
+        Assert.assertNotNull(refresh.getRefresh_token());
     }
 }
