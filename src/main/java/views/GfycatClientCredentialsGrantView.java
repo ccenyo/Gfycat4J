@@ -1,6 +1,6 @@
-package responses;
+package views;
 
-public class GfycatClientCredentialsGrantResult {
+public class GfycatClientCredentialsGrantView {
 
     private String token_type;
     private Long expires_in;
