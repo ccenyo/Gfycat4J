@@ -1,6 +1,8 @@
 package exceptions;
 
 
+import views.ErrorResponse;
+
 public class GfycatException extends RuntimeException {
 
     public GfycatException(String errorMessage) {
@@ -17,5 +19,9 @@ public class GfycatException extends RuntimeException {
 
     public GfycatException(Exception e) {
         super(e);
+    }
+
+    public GfycatException(ErrorResponse unMashErrorJson) {
+        super("Error "+unMashErrorJson.getErrorMessage().getCode() +" : "+unMashErrorJson.getErrorMessage().getDescription());
     }
 }
