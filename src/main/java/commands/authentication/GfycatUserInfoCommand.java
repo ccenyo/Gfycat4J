@@ -7,12 +7,14 @@ import views.GfycatUserView;
 import java.util.HashMap;
 import java.util.Map;
 
-public class GfycatUserAuthenticatedInfoCommand extends GetCommand<GfycatUserView> {
+public class GfycatUserInfoCommand extends GetCommand<GfycatUserView> {
 
     private final String token;
+    private final String userId;
 
-    public GfycatUserAuthenticatedInfoCommand(String token) {
+    public GfycatUserInfoCommand(String token, String userId) {
         this.token = token;
+        this.userId = userId;
     }
 
 
@@ -24,7 +26,7 @@ public class GfycatUserAuthenticatedInfoCommand extends GetCommand<GfycatUserVie
 
     @Override
     protected String getEndPoint() {
-        return "https://api.gfycat.com/v1/me";
+        return "https://api.gfycat.com/v1/users/"+userId;
     }
 
     @Override
@@ -35,6 +37,7 @@ public class GfycatUserAuthenticatedInfoCommand extends GetCommand<GfycatUserVie
     @Override
     protected void validate() {
         if(this.token == null) throw  new GfycatUserException("The token is mandatory");
+        if(this.userId == null) throw  new GfycatUserException("The userId is mandatory");
     }
 
     @Override

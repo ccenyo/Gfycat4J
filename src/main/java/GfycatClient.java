@@ -1,7 +1,8 @@
 import commands.authentication.GfycatCheckUserExistCommand;
 import commands.authentication.GfycatUserAuthenticatedInfoCommand;
+import commands.authentication.GfycatUserInfoCommand;
 import exceptions.GfycatException;
-import views.GfycatAuthenticatedUserView;
+import views.GfycatUserView;
 import views.GfycatClientCredentialsGrantView;
 import views.GfycatClientPasswordGrantView;
 
@@ -55,10 +56,16 @@ public class GfycatClient {
         return true;
     }
 
-    GfycatAuthenticatedUserView me() {
+    GfycatUserView me() {
         refreshIfExpired();
         GfycatUserAuthenticatedInfoCommand gfycatUserAuthenticatedInfoCommand = new GfycatUserAuthenticatedInfoCommand(this.token);
         return gfycatUserAuthenticatedInfoCommand.call();
+    }
+
+    GfycatUserView user(String userId) {
+        refreshIfExpired();
+        GfycatUserInfoCommand gfycatUserInfoCommand = new GfycatUserInfoCommand(this.token, userId);
+        return gfycatUserInfoCommand.call();
     }
 
 

@@ -1,6 +1,6 @@
 package views;
 
-public class GfycatAuthenticatedUserView {
+public class GfycatUserView {
 
     /**
      * A unique identifier for the user.
