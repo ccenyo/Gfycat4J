@@ -1,4 +1,4 @@
-package commands.authentication;
+package commands.user;
 
 import commands.HeadCommand;
 import commands.PostCommand;

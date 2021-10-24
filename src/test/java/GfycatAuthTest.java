@@ -79,4 +79,15 @@ public class GfycatAuthTest {
         Assert.assertNotNull(unreal_proton);
     }
 
+    @Test
+    public void search_term() {
+        String clientId = "2_sQvENC";
+        String clientSecret = "ALLOT3VjIDAEcZrc32iDLCz25FiS0GhwfHW9uqtJKZigARmptvTWAs98pb5oNLHD";
+
+        GfycatClient client =  GfycatBuilder.connect(clientId, clientSecret);
+        var result = client.search("omg", 20);
+
+        Assert.assertNotNull(result);
+    }
+
 }

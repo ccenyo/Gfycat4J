@@ -1,4 +1,4 @@
-package commands.authentication;
+package commands.user;
 
 import commands.GetCommand;
 import exceptions.GfycatUserException;

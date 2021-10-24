@@ -1,7 +1,9 @@
-import commands.authentication.GfycatCheckUserExistCommand;
-import commands.authentication.GfycatUserAuthenticatedInfoCommand;
-import commands.authentication.GfycatUserInfoCommand;
+import commands.search.GfycatSiteSearchCommand;
+import commands.user.GfycatCheckUserExistCommand;
+import commands.user.GfycatUserAuthenticatedInfoCommand;
+import commands.user.GfycatUserInfoCommand;
 import exceptions.GfycatException;
+import views.GfycatSearchResult;
 import views.GfycatUserView;
 import views.GfycatClientCredentialsGrantView;
 import views.GfycatClientPasswordGrantView;
@@ -19,14 +21,14 @@ public class GfycatClient {
     private final String clientSecret;
 
 
-    protected GfycatClient(GfycatClientCredentialsGrantView gfycatClientCredentialsGrantResult, String clientId, String clientSecret) {
+    public GfycatClient(GfycatClientCredentialsGrantView gfycatClientCredentialsGrantResult, String clientId, String clientSecret) {
         this.clientId = clientId;
         this.clientSecret = clientSecret;
         this.token = gfycatClientCredentialsGrantResult.getAccess_token();
         this.expiryDate = LocalDateTime.now().plusSeconds(gfycatClientCredentialsGrantResult.getExpires_in());
     }
 
-    protected GfycatClient(GfycatClientPasswordGrantView gfycatClientPasswordGrantView, String clientId, String clientSecret) {
+    public GfycatClient(GfycatClientPasswordGrantView gfycatClientPasswordGrantView, String clientId, String clientSecret) {
         this.clientId = clientId;
         this.clientSecret = clientSecret;
         this.token = gfycatClientPasswordGrantView.getAccess_token();
@@ -46,7 +48,7 @@ public class GfycatClient {
                 });
     }
 
-    boolean isUserExist(String userName) {
+    public boolean isUserExist(String userName) {
         refreshIfExpired();
         try {
             new GfycatCheckUserExistCommand(userName, this.token).call();
@@ -56,18 +58,46 @@ public class GfycatClient {
         return true;
     }
 
-    GfycatUserView me() {
+    public GfycatUserView me() {
         refreshIfExpired();
         GfycatUserAuthenticatedInfoCommand gfycatUserAuthenticatedInfoCommand = new GfycatUserAuthenticatedInfoCommand(this.token);
         return gfycatUserAuthenticatedInfoCommand.call();
     }
 
-    GfycatUserView user(String userId) {
+    public GfycatUserView user(String userId) {
         refreshIfExpired();
         GfycatUserInfoCommand gfycatUserInfoCommand = new GfycatUserInfoCommand(this.token, userId);
         return gfycatUserInfoCommand.call();
     }
 
+    public GfycatSearchResult search(String searchText) {
+        refreshIfExpired();
+        GfycatSiteSearchCommand gfycatSiteSearchCommand = new GfycatSiteSearchCommand(this.token, searchText);
+        return gfycatSiteSearchCommand.call();
+    }
+
+    public GfycatSearchResult search(String searchText, Integer count) {
+        refreshIfExpired();
+        GfycatSiteSearchCommand gfycatSiteSearchCommand = new GfycatSiteSearchCommand(this.token, searchText)
+                .setCount(count);
+        return gfycatSiteSearchCommand.call();
+    }
+
+    public GfycatSearchResult search(String searchText, String cursor) {
+        refreshIfExpired();
+        GfycatSiteSearchCommand gfycatSiteSearchCommand = new GfycatSiteSearchCommand(this.token, searchText)
+                .setCursor(cursor);
+        return gfycatSiteSearchCommand.call();
+    }
+
+
+    public GfycatSearchResult search(String searchText, Integer count, String cursor) {
+        refreshIfExpired();
+        GfycatSiteSearchCommand gfycatSiteSearchCommand = new GfycatSiteSearchCommand(this.token, searchText)
+                .setCount(count)
+                .setCursor(cursor);
+        return gfycatSiteSearchCommand.call();
+    }
 
     public String getToken() {
         return token;
