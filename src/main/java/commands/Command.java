@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import views.ErrorResponse;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,7 +26,8 @@ public abstract class Command<T> {
         POST,
         GET,
         PUT,
-        DELETE
+        DELETE,
+        HEAD
     }
 
 
@@ -69,6 +71,14 @@ public abstract class Command<T> {
 
 
     private T unMashJson(String jsonAsString, Class<T> clss) throws JsonProcessingException {
+        if(jsonAsString.isEmpty()) {
+            try {
+                return clss.getDeclaredConstructor().newInstance();
+            } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
         ObjectMapper mapper = new ObjectMapper();
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         return mapper.readValue(jsonAsString, clss);

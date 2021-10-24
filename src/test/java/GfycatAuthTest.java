@@ -42,4 +42,15 @@ public class GfycatAuthTest {
         Assert.assertNotNull(refresh.getAccess_token());
         Assert.assertNotNull(refresh.getRefresh_token());
     }
+
+    @Test
+    public void check_user_exist() {
+        String clientId = "2_sQvENC";
+        String clientSecret = "ALLOT3VjIDAEcZrc32iDLCz25FiS0GhwfHW9uqtJKZigARmptvTWAs98pb5oNLHD";
+
+        GfycatClient client =  GfycatBuilder.connect(clientId, clientSecret);
+        var unreal_proton = client.isUserExist("unreal_proton");
+
+        Assert.assertTrue(unreal_proton);
+    }
 }

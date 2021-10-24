@@ -1,3 +1,5 @@
+import commands.authentication.GfycatCheckUserExistCommand;
+import exceptions.GfycatException;
 import views.GfycatClientCredentialsGrantView;
 import views.GfycatClientPasswordGrantView;
 
@@ -41,6 +43,15 @@ public class GfycatClient {
                 });
     }
 
+    boolean isUserExist(String userName) {
+        refreshIfExpired();
+        try {
+            new GfycatCheckUserExistCommand(userName, this.token).call();
+        } catch (GfycatException e) {
+            return false;
+        }
+        return true;
+    }
     public String getToken() {
         return token;
     }
