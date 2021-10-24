@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public abstract class HeadCommand<T> extends Command<T>{
+
     @Override
     protected Method getMethod() {
         return Method.HEAD;

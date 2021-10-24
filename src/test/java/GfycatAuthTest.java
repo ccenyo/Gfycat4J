@@ -53,4 +53,19 @@ public class GfycatAuthTest {
 
         Assert.assertTrue(unreal_proton);
     }
+
+    @Test
+    public void get_authenticated_user_details() {
+        String clientId = "2_sQvENC";
+        String clientSecret = "ALLOT3VjIDAEcZrc32iDLCz25FiS0GhwfHW9uqtJKZigARmptvTWAs98pb5oNLHD";
+        String userName = "test_dev_account";
+        String password = "4xKkn52RaqZ9X7myNQX";
+
+        GfycatClient client =  GfycatBuilder.connect(clientId, clientSecret, userName, password);
+        var userInfo = client.me();
+
+        Assert.assertNotNull(userInfo);
+        Assert.assertNotNull(client.getToken());
+    }
+
 }

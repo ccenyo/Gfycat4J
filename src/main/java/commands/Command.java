@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import exceptions.GfycatException;
 import net.dongliu.requests.RawResponse;
+import net.dongliu.requests.RequestBuilder;
 import net.dongliu.requests.Requests;
 import org.json.JSONObject;
 import org.slf4j.Logger;
@@ -42,21 +43,31 @@ public abstract class Command<T> {
     public T call() {
         this.validate();
         defaultHeaders.putAll(getHeaders());
-        RawResponse send = Requests.newRequest(getMethod().name(), getEndPoint())
-                .headers(defaultHeaders)
-                .params(getParamsInLink())
-                .body(new JSONObject(getParamsInBody()).toString())
-                .send();
+        RequestBuilder request = Requests.newRequest(getMethod().name(), getEndPoint());
 
-        if(String.valueOf(send.statusCode()).startsWith("2")) {
+        if(!defaultHeaders.isEmpty())  {
+            request.headers(defaultHeaders);
+        }
+
+        if(!getParamsInLink().isEmpty())  {
+            request.params(getParamsInLink());
+        }
+
+        if(!getParamsInBody().isEmpty())  {
+            request.body(new JSONObject(getParamsInBody()).toString());
+        }
+
+        var response = request.send();
+
+        if(String.valueOf(response.statusCode()).startsWith("2")) {
             try {
-                return unMashJson(send.readToText());
+                return unMashJson(response.readToText());
             } catch (JsonProcessingException e) {
                 throw new GfycatException(e);
             }
         } else {
             try {
-                throw new GfycatException(unMashErrorJson(send.readToText()));
+                throw new GfycatException(unMashErrorJson(response.readToText()));
             } catch (JsonProcessingException e) {
                 throw new GfycatException(e);
             }

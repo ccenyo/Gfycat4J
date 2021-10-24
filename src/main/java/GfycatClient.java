@@ -1,5 +1,7 @@
 import commands.authentication.GfycatCheckUserExistCommand;
+import commands.authentication.GfycatUserAuthenticatedInfoCommand;
 import exceptions.GfycatException;
+import views.GfycatAuthenticatedUserView;
 import views.GfycatClientCredentialsGrantView;
 import views.GfycatClientPasswordGrantView;
 
@@ -52,6 +54,14 @@ public class GfycatClient {
         }
         return true;
     }
+
+    GfycatAuthenticatedUserView me() {
+        refreshIfExpired();
+        GfycatUserAuthenticatedInfoCommand gfycatUserAuthenticatedInfoCommand = new GfycatUserAuthenticatedInfoCommand(this.token);
+        return gfycatUserAuthenticatedInfoCommand.call();
+    }
+
+
     public String getToken() {
         return token;
     }
