@@ -87,7 +87,7 @@ public class GfycatAuthTest {
         GfycatClient client =  GfycatBuilder.connect(clientId, clientSecret);
         var result = client.search("omg", 20);
 
-        Assert.assertNotNull(result);
+        Assert.assertNotNull(result); 
     }
 
 }
