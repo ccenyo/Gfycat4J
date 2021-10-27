@@ -7,18 +7,22 @@
     <groupId>com.github.ccenyo</groupId>
     <artifactId>Gfycat4J</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>15</source>
-                    <target>15</target>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+    <description>A java wrapper for Gfycat API</description>
+    <name>Gfycat for Java</name>
+    <url>https://github.com/ccenyo/Gfycat4J</url>
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>https://github.com/ccenyo/Gfycat4J/blob/main/LICENSE</url>
+        </license>
+    </licenses>
+    <developers>
+        <developer>
+            <name>Cenyo Medewou</name>
+            <email>medewou@gmail.com</email>
+        </developer>
+    </developers>
+
     <distributionManagement>
         <repository>
             <id>github</id>
@@ -26,7 +30,7 @@
             <url>https://maven.pkg.github.com/ccenyo/Gfycat4J</url>
         </repository>
     </distributionManagement>
-
+    
     <dependencies>
         <dependency>
             <groupId>net.dongliu</groupId>
