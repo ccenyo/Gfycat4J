@@ -16,7 +16,11 @@ jobs:
           server-username: MAVEN_USERNAME
           server-password: MAVEN_PASSWORD
       - name: Publish package
-        run: mvn --batch-mode deploy
+        run: | 
+          mkdir ~/.m2 
+          echo "<settings><servers><server><id>github</id><username>ccenyo</username><password>${GITHUB_TOKEN}</password></server> <server><id>sonatype</id><username>${OSSRH_USERNAME}</username><password>${OSSRH_TOKEN}</password></server></servers></settings>" > ~/.m2/settings.xml
+          mvn --batch-mode deploy
         env:
           MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           MAVEN_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
