@@ -17,7 +17,7 @@ jobs:
           server-password: MAVEN_PASSWORD
       - name: Publish package
         run: | 
-          mkdir ~/.m2 
+          rm ~/.m2/settings.xml
           echo "<settings><servers><server><id>github</id><username>ccenyo</username><password>${GITHUB_TOKEN}</password></server> <server><id>sonatype</id><username>${OSSRH_USERNAME}</username><password>${OSSRH_TOKEN}</password></server></servers></settings>" > ~/.m2/settings.xml
           mvn --batch-mode deploy
         env:
