@@ -27,8 +27,8 @@ add the maven repository to your pom.xml
 ```java
         <dependency>
             <groupId>com.github.ccenyo</groupId>
-            <artifactId>DSM4J</artifactId>
-            <version>1.2.1</version>
+            <artifactId>gfycat4j</artifactId>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
 ```
 
